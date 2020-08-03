@@ -238,4 +238,4 @@ def eval_testset (musdb_loader, separator, target_name):
         print('SDR mean:', stats.mean(SDR))
         print('SDR median:', stats.median(SDR))
         
-    return SDR
+    return SDR, stats.mean(SDR), stats.median(SDR)

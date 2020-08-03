@@ -41,6 +41,8 @@ class U_Net_Framework(nn.Module):
             self.final_activation = nn.Sigmoid()
         elif (est_mode == "masking_tanh"):
             self.final_activation = nn.Tanh()
+        elif (est_mode == "masking_relu"):
+            self.final_activation = nn.ReLU()            
         else:
             raise NotImplementedError
             
