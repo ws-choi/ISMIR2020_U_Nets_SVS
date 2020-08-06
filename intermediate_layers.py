@@ -67,7 +67,7 @@ class TIF(nn.Module):
             
     def forward(self, x):
         return self.tif(x)
-        
+
 class TFC_TIF(nn.Module):
     def __init__(self, in_channels, num_layers, gr, kt, kf, f, bn_factor=16, bias=False):
         
@@ -92,7 +92,23 @@ class TFC_TIF(nn.Module):
         x = self.tfc(x)
         
         return x + self.tif(x)
-    
+
+def TFC_TDF(in_channels, num_layers, gr, kt, kf, f, bn_factor=16, bias=False):
+    '''
+    Wrapper Function: -> TDC_TIF
+    in_channels: number of input channels
+    num_layers: number of densly connected conv layers
+    gr: growth rate
+    kt: kernal size of the temporal axis.        
+    kf: kernal size of the freq. axis
+    f: num of frequency bins
+
+    below are params for TDF 
+    bn_factor: bottleneck factor. if None: single layer. else: MLP that maps f => f//bn_factor => f 
+    bias: bias setting of linear layers
+    '''    
+    return TFC_TIF(in_channels, num_layers, gr, kt, kf, f, bn_factor, bias)
+
 class TIC(nn.Module):
     ''' [B, in_channels, T, F] => [B, gr, T, F] '''
     def __init__(self, in_channels, num_layers, gr, kf):
