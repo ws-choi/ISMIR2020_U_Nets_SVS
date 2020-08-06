@@ -150,6 +150,17 @@ class TIC(nn.Module):
         x_ = x_.transpose(-2,-3) # B, c, T, F
         return x_
     
+def TDC(in_channels, num_layers, gr, kf):
+    ''' 
+    Wrapper Function: -> TIC
+    [B, in_channels, T, F] => [B, gr, T, F] 
+    in_channels: number of input channels
+    num_layers: number of densly connected conv layers
+    gr: growth rate
+    kf: kernal size of the freq. axis
+    ''' 
+    return TIC(in_channels, num_layers, gr, kf)
+    
        
 class TIC_sampling (nn.Module):
     ''' [B, in_channels, T, F] => [B, in_channels, T, F//2 or F*2] '''
@@ -188,6 +199,15 @@ class TIC_sampling (nn.Module):
         
         return self.bn(x)
 
+def TDC_sampling (in_channels, mode='downsampling'):
+        
+    '''
+    wrapper_function: -> TIC_sampling
+    [B, in_channels, T, F] => [B, in_channels, T, F//2 or F*2] 
+    in_channels: number of input channels
+    '''
+    return TIC_sampling(in_channels, mode)
+        
 class TIF_f1_to_f2(nn.Module):
     ''' [B, in_channels, T, F] => [B, gr, T, F] '''
     def __init__(self, channels, f1, f2, bn_factor=16, bias=False, min_bn_units=16):
