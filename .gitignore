@@ -137,3 +137,8 @@ data/*
 # UMX
 open-unmix-pytorch
 open-unmix-pytorch/*
+
+# tmp
+tmp
+tmp/*
+tmp*
