@@ -132,6 +132,7 @@ dmypy.json
 # musdb dataset
 data/*
 
+.idea*
 .directory
 
 # UMX
