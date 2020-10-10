@@ -61,12 +61,17 @@ wandb:          test_result/agg/vocals_SAR 6.77698
 wandb:          test_result/agg/vocals_ISR 12.45371
 ```
 
+## Indermediate Blocks
+
+Please see this [document](https://github.com/ws-choi/ISMIR2020_U_Nets_SVS/blob/master/paper_with_code/Paper%20with%20Code%20-%203.%20INTERMEDIATE%20BLOCKS.ipynb).
 
 ## How to use
 
 ### 1. Training
 
-#### A. General Parameters
+#### 1.1. Intermediate Block independent Parameters
+
+##### 1.1.A. General Parameters
 
   -   --spec_type complex --spec_est_mode mapping
 
@@ -74,7 +79,7 @@ wandb:          test_result/agg/vocals_ISR 12.45371
 - ```--musdb_is_wav``` whether the path contains wav files or not
 - ```--filed_mode``` whether you want to use filed mode or not. recommend to use it for the fast data preparation.
 - ```--target_name``` one of vocals, drum, bass, other
-#### B. Training Environment
+##### 1.1.B. Training Environment
 
 - ```--mode``` train or eval
 - ```--gpus``` number of gpus
@@ -89,7 +94,7 @@ wandb:          test_result/agg/vocals_ISR 12.45371
 -- ```--log``` True for default pytorch lightning log. ```wandb``` is also available.
 -- ```--seed``` random seed for a deterministic result. 
 
-#### C. Training hyperparmeters
+##### 1.1.C. Training hyperparmeters
 - ```--batch_size``` trivial :)
 - ```--optimizer``` adam, rmsprop, etc
 - ```--lr``` learning rate
@@ -98,19 +103,84 @@ wandb:          test_result/agg/vocals_ISR 12.45371
 - ```--min_epochs``` trivial :)
 - ```--max_epochs``` trivial :)
 - ```--model```
-    - tfc_tdf_net (current available)
+    - tfc_tdf_net
+    - tfc_net
+    - tdc_net
 
-#### D. Fourier parameters
+##### 1.1.D. Fourier parameters
 - ```--n_fft```
 - ```--hop_length```
 -- ```num_frame``` number of frames (time slices) 
-#### F. criterion
+##### 1.1.F. criterion
 - ```--train_loss```: spec_mse, raw_l1, etc...
 - ```--val_loss```: spec_mse, raw_l1, etc...
 
-#### G. SVS Framework
+#### 1.2. U-net Parameters
+
+- ```--n_blocks```: number of intermediate blocks. must be an odd integer. (default=7)
+- ```--input_channels```: 
+    - if you use two-channeled complex-valued spectrogram, then 4
+    - if you use two-channeled manginutde spectrogram, then 2 
+- ```--internal_channels```:  number of internal chennels (default=24)
+- ```--first_conv_activation```: (default='relu')
+- ```--last_activation```: (default='sigmoid')
+- ```--t_down_layers```: list of layer where you want to doubles/halves the time resolution. if None, ds/us applied to every single layer. (default=None)
+- ```--f_down_layers```: list of layer where you want to doubles/halves the frequency resolution. if None, ds/us applied to every single layer. (default=None)
+
+#### 1.3. SVS Framework
 - ```--spec_type```: type of a spectrogram. ['complex', 'magnitude']
 - ```--spec_est_mode```: spectrogram estimation method. ['mapping', 'masking']
+
+- **CaC Framework**
+    - you can use cac framework [1] by setting
+        - ```--spec_type complex --spec_est_mode mapping --last_activation identity```
+- **Mag-only Framework**
+    - if you want to use the traditional magnitude-only estimation with sigmoid, then try
+        - ```--spec_type magnitude --spec_est_mode masking --last_activation sigmoid```
+    - you can also change the last activation as follows
+        - ```--spec_type magnitude --spec_est_mode masking --last_activation relu```
+- Alternatives
+    - you can build an svs framework with any combination of these parameters
+    - e.g. ```--spec_type complex --spec_est_mode masking --last_activation tanh```
+
+
+        
+#### 1.4. Block-dependent Parameters
+
+##### 1.4.A. TDF Net
+
+---
+
+##### 1.4.B. TDC Net
+
+-```--n_internal_layers```: number of 1-d CNNs in a block (default=5)
+-```--kernel_size_f```: size of kernel of frequency-dimension (default=3)
+-```--tdc_activation```: activation function of each block (default=relu)
+        
+---
+        
+##### 1.4.C. TFC Net
+-```--n_internal_layers```: number of 1-d CNNs in a block (default=5)
+-```--kernel_size_t```: size of kernel of time-dimension (default=3)
+-```--kernel_size_f```: size of kernel of frequency-dimension (default=3)
+-```--tfc_activation```: activation function of each block (default=relu)
+
+---
+        
+##### 1.4.D. TFC_TDF Net
+-```--n_internal_layers```: number of 1-d CNNs in a block (default=5)
+-```--kernel_size_t```: size of kernel of time-dimension (default=3)
+-```--kernel_size_f```: size of kernel of frequency-dimension (default=3)
+-```--tfc_tdf_activation```: activation function of each block (default=relu)       
+-```--bn_factor```: bottleneck factor $bn$ (default=16)
+-```--min_bn_units```: when target frequency domain size is too small, we just use this value instead of $\frac{f}{bn}$. (default=16)
+-```--tfc_tdf_bias```: (default=False)
+
+---
+
+##### 1.4.E. TDC_RNN Net
+
+---
 
 ## Reference
 
