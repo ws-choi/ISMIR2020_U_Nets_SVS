@@ -132,9 +132,9 @@ def train(param):
         print('new_lr_suggestion:', new_lr)
         exit(-1)
 
-    seed_everything(2020)
+    if args['seed'] is not None:
+        seed_everything(args['seed'])
 
-    trainer.early_stop_callback.wait_count = 120
     print(model)
     trainer.fit(model, train_data_loader, valid_data_loader)
 

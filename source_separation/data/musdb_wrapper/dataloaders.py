@@ -59,19 +59,6 @@ class DataProvider():
                                    self.target_names,
                                    self.cache_mode, self.dev_mode)
 
-    def get_unmixed_train_dataloader(self, n_fft, hop_length, num_frame):
-        return get_unmixed_train_dataloader(self.musdb_root, self.is_wav, self.filed_mode,
-                                            n_fft, hop_length, num_frame,
-                                            self.batch_size, self.num_workers, self.pin_memory,
-                                            self.cache_mode, self.dev_mode)
-
-    def get_unmixed_eval_dataloader(self, n_fft, hop_length, num_frame):
-        return get_unmixed_eval_dataloader(self.musdb_root, self.is_wav, self.filed_mode,
-                                           n_fft, hop_length, num_frame,
-                                           self.batch_size, self.num_workers, self.pin_memory,
-                                           self.cache_mode, self.dev_mode)
-
-
 def get_train_dataloader(musdb_root, is_wav, filed_mode,
                          n_fft, hop_length, num_frame,
                          batch_size=4, num_workers=1, pin_memory=True,
@@ -157,61 +144,3 @@ def get_test_dataloader(musdb_root, is_wav, filed_mode,
                                   dev_mode=dev_mode)
 
     return DataLoader(musdb_test, batch_size=batch_size, num_workers=num_workers, pin_memory=pin_memory)
-
-
-def get_unmixed_train_dataloader(musdb_root, is_wav, filed_mode,
-                                 n_fft, hop_length, num_frame,
-                                 batch_size=4, num_workers=1, pin_memory=True,
-                                 cache_mode=True, dev_mode=False
-                                 ) -> DataLoader:
-    if filed_mode:
-        musdb_unmixed_train = FiledMusdbUnmixedTrainSet(musdb_root,
-                                                        is_wav,
-                                                        n_fft=n_fft,
-                                                        hop_length=hop_length,
-                                                        num_frame=num_frame,
-                                                        cache_mode=cache_mode,
-                                                        dev_mode=dev_mode)
-    else:
-        musdb_loader = MusdbLoader(musdb_root, is_wav)
-        musdb_unmixed_train = MusdbUnmixedTrainSet(musdb_loader.musdb_train,
-                                                   n_fft=n_fft,
-                                                   hop_length=hop_length,
-                                                   num_frame=num_frame,
-                                                   cache_mode=cache_mode,
-                                                   dev_mode=dev_mode)
-
-    return DataLoader(musdb_unmixed_train, batch_size=batch_size, num_workers=num_workers, pin_memory=pin_memory)
-
-
-def get_unmixed_eval_dataloader(musdb_root, is_wav, mode, filed_mode,
-                                n_fft, hop_length, num_frame,
-                                batch_size=4, num_workers=1, pin_memory=True,
-                                cache_mode=True, dev_mode=False
-                                ) -> DataLoader:
-    if filed_mode:
-        musdb_unmixed_eval = FiledMusdbUnmixedEvalSet(musdb_root,
-                                                      is_wav,
-                                                      mode,
-                                                      n_fft=n_fft,
-                                                      hop_length=hop_length,
-                                                      num_frame=num_frame,
-                                                      cache_mode=cache_mode,
-                                                      dev_mode=dev_mode)
-    else:
-        musdb_loader = MusdbLoader(musdb_root, is_wav)
-        if mode == 'valid':
-            musdb_eval = musdb_loader.musdb_valid
-        elif mode == 'test':
-            musdb_eval = musdb_loader.musdb_test
-        else:
-            raise ModuleNotFoundError
-
-        musdb_unmixed_eval = MusdbUnmixedEvalSet(musdb_eval,
-                                                 n_fft=n_fft,
-                                                 hop_length=hop_length,
-                                                 num_frame=num_frame,
-                                                 cache_mode=cache_mode,
-                                                 dev_mode=dev_mode)
-
-    return DataLoader(musdb_unmixed_eval, batch_size=batch_size, num_workers=num_workers, pin_memory=pin_memory)

@@ -26,17 +26,41 @@ pip install musdb museval pytorch_lightning effortless_config wandb pydub nltk s
 
 ### 1. activate your conda
 
-```
+```shell script
 conda activate yourcondaname
 ```
 
 ### 2. Training a default UNet with TFC_TDFs
 
 ```
-python main.py --musdb_root ../repos/musdb18_wav --musdb_is_wav True --filed_mode True --target_name vocals --mode train --gpus 4 --distributed_backend ddp --sync_batchnorm True --pin_memory True --num_workers 32 --precision 16 --run_id debug --optimizer adam --lr 0.001 --save_top_k 3 --patience 100 --min_epochs 1000 --max_epochs 2000 --n_fft 2048 --hop_length 1024 --num_frame 128  --train_loss spec_mse --val_loss raw_l1 --model tfc_tdf_net  --spec_est_mode mapping --spec_type complex --n_blocks 7 --internal_channels 24  --n_internal_layers 5 --kernel_size_t 3 --kernel_size_f 3 --min_bn_units 16 --tfc_tdf_activation relu  --first_conv_activation relu --last_activation identity 
+python main.py --musdb_root ../repos/musdb18_wav --musdb_is_wav True --filed_mode True --target_name vocals --mode train --gpus 4 --distributed_backend ddp --sync_batchnorm True --pin_memory True --num_workers 32 --precision 16 --run_id debug --optimizer adam --lr 0.001 --save_top_k 3 --patience 100 --min_epochs 1000 --max_epochs 2000 --n_fft 2048 --hop_length 1024 --num_frame 128  --train_loss spec_mse --val_loss raw_l1 --model tfc_tdf_net  --spec_est_mode mapping --spec_type complex --n_blocks 7 --internal_channels 24  --n_internal_layers 5 --kernel_size_t 3 --kernel_size_f 3 --min_bn_units 16 --tfc_tdf_activation relu  --first_conv_activation relu --last_activation identity --seed 2020
 ```
 
---spec_type complex --spec_est_mode mapping --filed_mode True
+### 3. Evaluation
+
+After training is done, checkpoints are saved in the following directory. 
+
+```etc/modelname/run_id/*.ckpt```
+
+For evaluation, 
+
+```shell script
+python main.py --musdb_root ../repos/musdb18_wav --musdb_is_wav True --filed_mode True --target_name vocals --mode eval --gpus 1 --pin_memory True --num_workers 64 --precision 32 --run_id debug --batch_size 4 --n_fft 2048 --hop_length 1024 --num_frame 128 --train_loss spec_mse --val_loss raw_l1 --model tfc_tdf_net --spec_est_mode mapping --spec_type complex --n_blocks 7 --internal_channels 24 --n_internal_layers 5 --kernel_size_t 3 --kernel_size_f 3 --min_bn_units 16 --tfc_tdf_activation relu --first_conv_activation relu --last_activation identity --log wandb --ckpt vocals_epoch=891.ckpt
+```
+
+Below is the result.
+
+```shell script
+wandb:          test_result/agg/vocals_SDR 6.954695
+wandb:   test_result/agg/accompaniment_SAR 14.3738075
+wandb:          test_result/agg/vocals_SIR 15.5527
+wandb:   test_result/agg/accompaniment_SDR 13.561705
+wandb:   test_result/agg/accompaniment_ISR 22.69328
+wandb:   test_result/agg/accompaniment_SIR 18.68421
+wandb:          test_result/agg/vocals_SAR 6.77698
+wandb:          test_result/agg/vocals_ISR 12.45371
+```
+
 
 ## How to use
 
@@ -63,6 +87,8 @@ python main.py --musdb_root ../repos/musdb18_wav --musdb_is_wav True --filed_mod
 - ```--dev_mode``` whether you want a developement mode or not. dev mode is much faster because it uses only a small subset of the dataset.
 - ```--run_id``` (optional) directory path where you want to store logs and etc. if none then the timestamp.
 -- ```--log``` True for default pytorch lightning log. ```wandb``` is also available.
+-- ```--seed``` random seed for a deterministic result. 
+
 #### C. Training hyperparmeters
 - ```--batch_size``` trivial :)
 - ```--optimizer``` adam, rmsprop, etc

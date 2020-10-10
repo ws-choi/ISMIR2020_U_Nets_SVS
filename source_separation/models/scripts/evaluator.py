@@ -21,7 +21,7 @@ def eval(param):
     # MODEL
     ##########################################################
     # # # get framework
-    framework = get_class_by_name('one2one_separation', args['model'])
+    framework = get_class_by_name(args['model'])
     # # # Model instantiation
     model = framework(**args)
     ##########################################################
@@ -47,7 +47,7 @@ def eval(param):
 
     # -- checkpoint
     ckpt_path = Path(args['ckpt_root_path']).joinpath(args['model']).joinpath(args['run_id'])
-    ckpt_path = '{}/{}'.format(str(ckpt_path), args['epoch'])
+    ckpt_path = '{}/{}'.format(str(ckpt_path), args['ckpt'])
 
     # -- logger setting
     log = args['log']
@@ -57,7 +57,7 @@ def eval(param):
         args['early_stop_callback'] = False
     elif log == 'wandb':
         args['logger'] = WandbLogger(project='one2one_separation', tags=args['model'], offline=False,
-                                     id=args['run_id'] + '_eval_' + args['epoch'].replace('=','_'))
+                                     id=args['run_id'] + '_eval_' + args['ckpt'].replace('=','_'))
         args['logger'].log_hyperparams(model.hparams)
         args['logger'].watch(model, log='all')
     elif log == 'tensorboard':
