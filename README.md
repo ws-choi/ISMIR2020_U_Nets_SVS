@@ -153,28 +153,28 @@ Please see this [document](https://github.com/ws-choi/ISMIR2020_U_Nets_SVS/blob/
 
 ##### 1.4.B. TDC Net
 
--```--n_internal_layers```: number of 1-d CNNs in a block (default=5)
--```--kernel_size_f```: size of kernel of frequency-dimension (default=3)
--```--tdc_activation```: activation function of each block (default=relu)
+- ```--n_internal_layers```: number of 1-d CNNs in a block (default=5)
+- ```--kernel_size_f```: size of kernel of frequency-dimension (default=3)
+- ```--tdc_activation```: activation function of each block (default=relu)
         
 ---
         
 ##### 1.4.C. TFC Net
--```--n_internal_layers```: number of 1-d CNNs in a block (default=5)
--```--kernel_size_t```: size of kernel of time-dimension (default=3)
--```--kernel_size_f```: size of kernel of frequency-dimension (default=3)
--```--tfc_activation```: activation function of each block (default=relu)
+- ```--n_internal_layers```: number of 1-d CNNs in a block (default=5)
+- ```--kernel_size_t```: size of kernel of time-dimension (default=3)
+- ```--kernel_size_f```: size of kernel of frequency-dimension (default=3)
+- ```--tfc_activation```: activation function of each block (default=relu)
 
 ---
         
 ##### 1.4.D. TFC_TDF Net
--```--n_internal_layers```: number of 1-d CNNs in a block (default=5)
--```--kernel_size_t```: size of kernel of time-dimension (default=3)
--```--kernel_size_f```: size of kernel of frequency-dimension (default=3)
--```--tfc_tdf_activation```: activation function of each block (default=relu)       
--```--bn_factor```: bottleneck factor $bn$ (default=16)
--```--min_bn_units```: when target frequency domain size is too small, we just use this value instead of $\frac{f}{bn}$. (default=16)
--```--tfc_tdf_bias```: (default=False)
+- ```--n_internal_layers```: number of 1-d CNNs in a block (default=5)
+- ```--kernel_size_t```: size of kernel of time-dimension (default=3)
+- ```--kernel_size_f```: size of kernel of frequency-dimension (default=3)
+- ```--tfc_tdf_activation```: activation function of each block (default=relu)       
+- ```--bn_factor```: bottleneck factor $bn$ (default=16)
+- ```--min_bn_units```: when target frequency domain size is too small, we just use this value instead of $\frac{f}{bn}$. (default=16)
+- ```--tfc_tdf_bias```: (default=False)
 
 ---
 
