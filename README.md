@@ -73,12 +73,11 @@ Please see this [document](https://github.com/ws-choi/ISMIR2020_U_Nets_SVS/blob/
 
 ##### 1.1.A. General Parameters
 
-  -   --spec_type complex --spec_est_mode mapping
-
 - ```--musdb_root``` musdb path
 - ```--musdb_is_wav``` whether the path contains wav files or not
 - ```--filed_mode``` whether you want to use filed mode or not. recommend to use it for the fast data preparation.
 - ```--target_name``` one of vocals, drum, bass, other
+
 ##### 1.1.B. Training Environment
 
 - ```--mode``` train or eval
@@ -91,8 +90,8 @@ Please see this [document](https://github.com/ws-choi/ISMIR2020_U_Nets_SVS/blob/
 - ```--precision``` 16 or 32
 - ```--dev_mode``` whether you want a developement mode or not. dev mode is much faster because it uses only a small subset of the dataset.
 - ```--run_id``` (optional) directory path where you want to store logs and etc. if none then the timestamp.
--- ```--log``` True for default pytorch lightning log. ```wandb``` is also available.
--- ```--seed``` random seed for a deterministic result. 
+- ```--log``` True for default pytorch lightning log. ```wandb``` is also available.
+- ```--seed``` random seed for a deterministic result. 
 
 ##### 1.1.C. Training hyperparmeters
 - ```--batch_size``` trivial :)
@@ -110,7 +109,7 @@ Please see this [document](https://github.com/ws-choi/ISMIR2020_U_Nets_SVS/blob/
 ##### 1.1.D. Fourier parameters
 - ```--n_fft```
 - ```--hop_length```
--- ```num_frame``` number of frames (time slices) 
+- ```num_frame``` number of frames (time slices) 
 ##### 1.1.F. criterion
 - ```--train_loss```: spec_mse, raw_l1, etc...
 - ```--val_loss```: spec_mse, raw_l1, etc...
