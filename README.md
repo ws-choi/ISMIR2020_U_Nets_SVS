@@ -182,6 +182,61 @@ Please see this [document](https://github.com/ws-choi/ISMIR2020_U_Nets_SVS/blob/
 
 ---
 
+## Reproducible Experimental Results
+
+- TFC_TDF_large
+    - parameters
+    ```
+    --musdb_root ../repos/musdb18_wav
+    --musdb_is_wav True
+    --filed_mode True
+
+    --gpus 4
+    --distributed_backend ddp
+    --sync_batchnorm True
+
+    --num_workers 72
+    --train_loss spec_mse
+    --val_loss raw_l1
+    --batch_size 12
+    --precision 16
+    --pin_memory True
+    --num_worker 72         
+    --save_top_k 3
+    --patience 200
+    --run_id debug_large
+    --log wandb
+    --min_epochs 2000
+    --max_epochs 3000
+
+    --optimizer adam
+    --lr 0.001
+
+    --model tfc_tdf_net
+    --n_fft 4096
+    --hop_length 1024
+    --num_frame 128
+    --spec_type complex
+    --spec_est_mode mapping
+    --last_activation identity
+    --n_blocks 9
+    --internal_channels 24
+    --n_internal_layers 5
+    --kernel_size_t 3 
+    --kernel_size_f 3 
+    --tfc_tdf_bias True
+    --seed 2020
+  
+    ```
+    - training
+    ``` shell script
+    python main.py --musdb_root ../repos/musdb18_wav --musdb_is_wav True --filed_mode True --gpus 4 --distributed_backend ddp --sync_batchnorm True --num_workers 72 --train_loss spec_mse --val_loss raw_l1 --batch_size 24 --precision 16 --pin_memory True --num_worker 72 --save_top_k 3 --patience 200 --run_id debug_large --log wandb --min_epochs 2000 --max_epochs 3000 --optimizer adam --lr 0.001 --model tfc_tdf_net --n_fft 4096 --hop_length 1024 --num_frame 128 --spec_type complex --spec_est_mode mapping --last_activation identity --n_blocks 9 --internal_channels 24 --n_internal_layers 5 --kernel_size_t 3 --kernel_size_f 3 --tfc_tdf_bias True --seed 2020
+    ```
+    - evaluation result (epoch 2007)
+        - SDR 8.029
+        - ISR 13.708
+        - SIR 16.409
+        - SAR 7.533
 ## Reference
 
 [1] Woosung Choi, Minseok Kim, Jaehwa Chung, Daewon Lee, and Soonyoung Jung. "[Investigating Deep Neural Transformations for Spectrogram-based Musical Source Separation](https://arxiv.org/abs/1912.02591)" arXiv preprint arXiv:1912.02591 (2019).
