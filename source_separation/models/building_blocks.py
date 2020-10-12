@@ -359,7 +359,7 @@ class TIC_RNN(nn.Module):
 
         self.skip_connection = skip_connection
 
-        self.tic = TIC(in_channels, num_layers_tic, gr, kf)
+        self.tic = TDC(in_channels, num_layers_tic, gr, kf, activation)
         self.bn = nn.BatchNorm2d(gr)
 
         hidden_units_rnn = max(f // bn_factor_rnn, min_bn_units_rnn)

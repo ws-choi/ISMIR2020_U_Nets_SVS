@@ -151,6 +151,11 @@ Please see this [document](https://github.com/ws-choi/ISMIR2020_U_Nets_SVS/blob/
 
 ##### 1.4.A. TDF Net
 
+- ```--bn_factor```: bottleneck factor $bn$ (default=16)
+- ```--min_bn_units```: when target frequency domain size is too small, we just use this value instead of $\frac{f}{bn}$. (default=16)
+- ```--bias```: (default=False) 
+- ```--tdf_activation```: activation function of each block (default=relu)       
+
 ---
 
 ##### 1.4.B. TDC Net
@@ -181,8 +186,21 @@ Please see this [document](https://github.com/ws-choi/ISMIR2020_U_Nets_SVS/blob/
 ---
 
 ##### 1.4.E. TDC_RNN Net
+- ```'--n_internal_layers'``` : number of 1-d CNNs in a block (default=5)
 
----
+- ```'--kernel_size_f'``` : size of kernel of frequency-dimension (default=3)
+
+- ```'--bn_factor_rnn'``` : (default=16)
+- ```'--num_layers_rnn'``` : (default=1)
+- ```'--bias_rnn'``` : bool, (default=False)
+- ```'--min_bn_units_rnn'``` :  (default=16)
+    
+- ```'--bn_factor_tdf'``` : (default=16)
+- ```'--bias_tdf'``` : bool, (default=False)
+
+- ```'--tdc_rnn_activation'``` : (default='relu')
+
+> current bug - cuda error occurs when tdc_rnn net with precision 16 
 
 ## Reproducible Experimental Results
 
