@@ -60,6 +60,9 @@ wandb:   test_result/agg/accompaniment_SIR 18.68421
 wandb:          test_result/agg/vocals_SAR 6.77698
 wandb:          test_result/agg/vocals_ISR 12.45371
 ```
+### 4. Interactive Report (wandb)
+
+[wandb report](https://wandb.ai/wschoi/one2one_separation/reports/Wandb-Report-run_id-debug---VmlldzoyNzQ0Nzg?accessToken=ce3xhzl6x6uplyw55g2wpxlk1q78e238sw6obsxxf4n8ih3pbl43drpa4f51z7fl)
 
 ## Indermediate Blocks
 
@@ -236,6 +239,10 @@ Please see this [document](https://github.com/ws-choi/ISMIR2020_U_Nets_SVS/blob/
         - ISR 13.708
         - SIR 16.409
         - SAR 7.533
+
+### Interactive Report (wandb)
+[wandb report](https://wandb.ai/wschoi/one2one_separation/reports/Wandb-Report-run_id-debug--VmlldzoyNzQ0OTI?accessToken=uky1arblugoad7xleyiqf7mllw4o2b82w0hnckiekiuc1w29ki8l3kms2yaball0)
+
 ## Reference
 
 [1] Woosung Choi, Minseok Kim, Jaehwa Chung, Daewon Lee, and Soonyoung Jung. "[Investigating Deep Neural Transformations for Spectrogram-based Musical Source Separation](https://arxiv.org/abs/1912.02591)" arXiv preprint arXiv:1912.02591 (2019).
