@@ -5,6 +5,7 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 
+from source_separation.data.musdb_wrapper.datasets import SingleTrackSet
 from source_separation.models.separation_framework import Spectrogram_based
 from source_separation.utils.functions import get_activation_by_name, string_to_list
 from source_separation.utils.weight_initialization import init_weights_functional
@@ -104,7 +105,6 @@ class Dense_UNET(nn.Module):
         ###########################################################
         # Block-dependent Section
 
-
         f = dim_f
 
         i = 0
@@ -184,7 +184,7 @@ class Dense_UNET_Framework(Spectrogram_based):
         else:
             spec_complex = self.stft.to_spec_complex(input_signal)  # *, N, T, 2, ch
             spec_complex = torch.flatten(spec_complex, start_dim=-2)  # *, N, T, 2ch
-            return spec_complex.transpose(-1, -3) # *, 2ch, T, N
+            return spec_complex.transpose(-1, -3)  # *, 2ch, T, N
 
     def separate(self, input_signal) -> torch.Tensor:
 
@@ -216,7 +216,7 @@ class Dense_UNET_Framework(Spectrogram_based):
 
         return restored
 
-    def separate_and_return_spec(self, input_signal) -> Tuple[Tensor,Tensor]:
+    def separate_and_return_spec(self, input_signal) -> Tuple[Tensor, Tensor]:
 
         phase = None
         if self.magnitude_based:
@@ -246,6 +246,23 @@ class Dense_UNET_Framework(Spectrogram_based):
             restored = self.stft.restore_complex(output_spec)
 
         return restored, output_spec_cache
+
+    def separate_track(self, input_signal) -> torch.Tensor:
+
+        with torch.no_grad():
+            db = SingleTrackSet(input_signal, self.hop_length, self.num_frame, self.target_name )
+            separated = []
+
+            for item in db:
+                separated.append(self.separate(item.unsqueeze(0).to(self.device))[0]
+                                 [self.trim_length:-self.trim_length].detach().cpu().numpy())
+
+        import numpy as np
+        separated = np.concatenate(separated, axis=0)
+
+        import soundfile
+        soundfile.write('temp.wav', separated, 44100)
+        return soundfile.read('temp.wav')[0]
 
     @staticmethod
     def add_model_specific_args(parent_parser):
