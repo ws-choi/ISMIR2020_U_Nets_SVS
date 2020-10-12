@@ -21,7 +21,8 @@ pip install musdb museval pytorch_lightning effortless_config wandb pydub nltk s
     ```shell script
    musdbconvert path/to/musdb-stems-root path/to/new/musdb-wav-root
    ```
-## Pretrained Model Demonstration
+
+## Demonstration: A Pretrained Model (TFC_TDF_Net (large))
 
 [Colab Link](https://colab.research.google.com/github/ws-choi/ISMIR2020_U_Nets_SVS/blob/master/colab_demo/TFC_TDF_Net_Large.ipynb)
 
