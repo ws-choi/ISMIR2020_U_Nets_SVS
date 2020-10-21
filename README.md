@@ -265,6 +265,11 @@ Please see this [document](https://github.com/ws-choi/ISMIR2020_U_Nets_SVS/blob/
 ### Interactive Report (wandb)
 [wandb report](https://wandb.ai/wschoi/one2one_separation/reports/Wandb-Report-run_id-debug--VmlldzoyNzQ0OTI?accessToken=uky1arblugoad7xleyiqf7mllw4o2b82w0hnckiekiuc1w29ki8l3kms2yaball0)
 
+## Cite This paper as 
+
+```
+@inproceedings{choi_2020, Author = {Choi, Woosung and Kim, Minseok and Chung, Jaehwa and Lee, Daewon and Jung, Soonyoung}, Booktitle = {21th International Society for Music Information Retrieval Conference}, Editor = {ISMIR}, Month = {OCTOBER}, Title = {Investigating U-Nets with various intermediate blocks for spectrogram-based singing voice separation.}, Year = {2020}}
+```
 ## Reference
 
-[1] Woosung Choi, Minseok Kim, Jaehwa Chung, Daewon Lee, and Soonyoung Jung. "[Investigating Deep Neural Transformations for Spectrogram-based Musical Source Separation](https://arxiv.org/abs/1912.02591)" arXiv preprint arXiv:1912.02591 (2019).
+[1]  Woosung Choi,  Minseok Kim,  Jaehwa Chung,  DaewonLee, and Soonyoung Jung, “Investigating u-nets with various intermediate blocks for spectrogram-based singingvoice separation.,”  in 21th International Society for Music Information Retrieval Conference, ISMIR, Ed., OCTOBER 2020.
