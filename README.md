@@ -3,6 +3,14 @@
 
 A Pytorch Implementation of the paper "Investigating U-NETS With Various Intermediate Blocks For Spectrogram-based Singing Voice Separation (ISMIR 2020)"
 
+## Updates
+
+- This model was originally proposed for Singing Voice Separation.
+- but it turns out that this model also performs well for other musical instruments (drums, bass, other)
+![](tfc-tdf-u-net-for-musdb.png)
+- More information: please see page 53 of the following dissertation 
+    - Choi, Woosung, [Deep Learning-based Latent Source Analysis for Source-aware Audio Manipulation](https://ws-choi.github.io/cv/assets/dissertation.pdf). PhD Dissertation. Korea University, 2021.
+
 ## Installation
 
 ```
