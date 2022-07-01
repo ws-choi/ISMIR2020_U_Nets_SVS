@@ -23,7 +23,7 @@ class TFC(WI_Module):
         for i in range(num_layers):
             self.H.append(
                 nn.Sequential(
-                    nn.Conv2d(in_channels=c, out_channels=gr, kernel_size=(kf, kt), stride=1,
+                    nn.Conv2d(in_channels=c, out_channels=gr, kernel_size=(kt, kf), stride=1,
                               padding=(kt // 2, kf // 2)),
                     nn.BatchNorm2d(gr),
                     activation(),
